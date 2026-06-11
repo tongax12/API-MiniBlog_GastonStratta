@@ -22,6 +22,8 @@
   "dependencies": {
     "express": "^5.2.1",
     "pg": "^8.21.0",
-    "vitest": "^4.1.8"
+    "swagger-ui-express": "^5.0.1",
+    "vitest": "^4.1.8",
+    "yamljs": "^0.3.0"
   }
 }
