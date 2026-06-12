@@ -8,7 +8,7 @@ CREATE TABLE authors (
 
     bio TEXT,
 
-    createAt TIMESTAMPTZ DEFAULT NOW()
+    create_at TIMESTAMPTZ DEFAULT NOW()
 );
 
 CREATE TABLE posts (
@@ -21,6 +21,8 @@ CREATE TABLE posts (
 
     content TEXT,
 
-    published_at TIMESTAMPTZ DEFAULT NOW()
+    published BOOLEAN DEFAULT FALSE,
+
+    created_at TIMESTAMPTZ DEFAULT NOW()
 
 );
