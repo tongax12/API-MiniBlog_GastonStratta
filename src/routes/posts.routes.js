@@ -3,14 +3,14 @@ const { loadEnvFile } = require('node:process');
 loadEnvFile('.env');
 const express = require('express');
 const router = express.Router();
-import { createError } from '../../errors';
+//import { createError } from '../../errors';
 
 router.get('/', async (req,res) =>{
     try{
         const listPosts = await pool.query('SELECT * FROM posts');
         res.json(listPosts.rows);
     } catch(error) {
-        res.status(500).json( { error: error.messsage})
+        res.status(500).json( { error: error.message})
     }
 })
 
@@ -89,12 +89,12 @@ router.post('/', async (req,res) =>{
     try{
 
         const result = await pool.query(
-            'INSERT INTO posts (title, content, author_id, published) VALUES ($1, $2, $3, $4) RETURNING *',[title, content, author_id, published],
+            'INSERT INTO posts (title, content, author_id, published) VALUES ($1, $2, $3, $4) RETURNING *',[title, content, author_id, published]
         )
 
         res.status(201).json(result.rows[0]);
     } catch(error) {
-        res.status(500).json( { error: error.messsage})
+        res.status(500).json( { error: error.message})
     }
 
 });
@@ -102,16 +102,16 @@ router.post('/', async (req,res) =>{
 router.put('/:id', async (req,res) =>{
     const id = Number(req.params.id);
     
-    const {title, content, published};
+    const {title, content, published} = req.body;
     //hacer el if
     try{
-        const updatePost = await pool.query('UPDATE posts title= $1, content= $2, published= $3 WHERE id = $4 RETURNING *', [title, content, published, id]);
+        const updatePost = await pool.query('UPDATE posts SET title= $1, content= $2, published= $3 WHERE id = $4 RETURNING *', [title, content, published, id]);
         if(updatePost.rows.length === 0){
             return res.status(404).json( {error: "Author not found"} );
         }
-        res.status(200).json
+        res.status(200).json(updatePost.rows[0])
     } catch(error) {
-        res.status(500).json( { error: error.messsage})
+        res.status(500).json( { error: error.message})
     }
 });
 

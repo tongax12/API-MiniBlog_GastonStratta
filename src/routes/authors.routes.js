@@ -3,7 +3,7 @@ const { loadEnvFile } = require('node:process');
 loadEnvFile('.env');
 const express = require('express');
 const router = express.Router();
-import { createError } from '../../errors';
+//import { createError } from '../../errors';
 const app = express();
 
 app.use(express.json());
@@ -11,7 +11,7 @@ app.use(express.json());
 router.get('/', async (req,res)=>{
     try{
         const authorList = await pool.query('SELECT * FROM authors');
-        res.json(result.rows);
+        res.json(authorList.rows);
     } catch (error) { 
     res.status(500).json( { error: error.message });
     }
@@ -53,14 +53,14 @@ router.post('/', async (req,res) =>{
 router.put('/:id', async (req,res) =>{
     const id = Number(req.params.id);
     
-    const {name, email, bio};
+    const {name, email, bio} = req.body;
     //hacer el if
     try{
-        const updateAuthor = await pool.query('UPDATE authors name= $1, email= $2, bio= $3 WHERE id = $4 RETURNING *', [name, email,bio, id]);
+        const updateAuthor = await pool.query('UPDATE authors SET name= $1, email= $2, bio= $3 WHERE id = $4 RETURNING *', [name, email,bio, id]);
         if(updateAuthor.rows.length === 0){
             return res.status(404).json( {error: "Author not found"} );
         }
-        res.status(200).json
+        res.status(200).json(updateAuthor.rows[0])
     } catch(error) {
         res.status(500).json( { error: error.messsage})
     }
@@ -75,7 +75,7 @@ router.delete('/:id', async(req,res) => {
     } 
     res.status(200).json(authorDelete.rows[0]);
     } catch(error) {
-        res.status(500).json( { error: error.messsage})
+        res.status(500).json( { error: error.message})
     }
 })
 

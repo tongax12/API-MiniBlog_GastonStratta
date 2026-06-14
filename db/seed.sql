@@ -1,28 +1,19 @@
-CREATE DATABASE api_miniblog;
-CREATE TABLE authors (
-    id SERIAL PRIMARY KEY,
 
-    name VARCHAR(100) NOT NULL,
+INSERT INTO authors (name, email, bio) VALUES
 
-    email VARCHAR(100) NOT NULL,
+ ('Ana García', 'ana@example.com', 'Desarrolladora full-stack apasionada por Node.js'),
 
-    bio TEXT,
+ ('Carlos Ruiz', 'carlos@example.com', 'Escritor técnico especializado en bases de datos'),
 
-    create_at TIMESTAMPTZ DEFAULT NOW()
-);
+ ('María López', 'maria@example.com', 'Ingeniera de software con foco en APIs REST');
+INSERT INTO posts (title, content, author_id, published) VALUES
 
-CREATE TABLE posts (
+ ('Introducción a Node.js', 'Node.js es un runtime de JavaScript...', 1, true),
 
-    id SERIAL PRIMARY KEY,
+ ('PostgreSQL vs MySQL', 'Ambas bases de datos tienen ventajas...', 2, true),
 
-    author_id INTEGER REFERENCES authors(id),
+ ('APIs RESTful', 'REST es un estilo arquitectónico...', 1, true),
 
-    title VARCHAR(255),
+ ('Manejo de errores en Express', 'El manejo apropiado de errores...', 3, false),
 
-    content TEXT,
-
-    published BOOLEAN DEFAULT FALSE,
-
-    created_at TIMESTAMPTZ DEFAULT NOW()
-
-);
+ ('Async/Await explicado', 'Las promesas simplifican el código asíncrono...', 1, false);
