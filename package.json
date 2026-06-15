@@ -25,6 +25,7 @@
     "express": "^5.2.1",
     "pg": "^8.21.0",
     "swagger-ui-express": "^5.0.1",
+    "validator": "^13.15.35",
     "vitest": "^4.1.8",
     "yamljs": "^0.3.0"
   },
