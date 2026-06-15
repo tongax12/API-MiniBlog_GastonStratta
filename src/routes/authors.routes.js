@@ -1,6 +1,4 @@
 const pool = require('../../db/config');
-const { loadEnvFile } = require('node:process');
-loadEnvFile('.env');
 const express = require('express');
 const router = express.Router();
 //import { createError } from '../../errors';
@@ -10,7 +8,7 @@ app.use(express.json());
 
 router.get('/', async (req,res)=>{
     try{
-        const authorList = await pool.query('SELECT * FROM authors');
+        const authorList = await pool.query('SELECT * FROM authors ORDER BY id ASC');
         res.json(authorList.rows);
     } catch (error) { 
     res.status(500).json( { error: error.message });

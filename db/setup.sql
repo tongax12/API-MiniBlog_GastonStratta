@@ -1,4 +1,4 @@
-CREATE DATABASE api_miniblog;
+/*CREATE DATABASE api_miniblog;*/
 CREATE TABLE authors (
     id SERIAL PRIMARY KEY,
 
@@ -15,7 +15,7 @@ CREATE TABLE posts (
 
     id SERIAL PRIMARY KEY,
 
-    author_id INTEGER REFERENCES authors(id),
+    author_id INTEGER REFERENCES authors(id) ON DELETE CASCADE,
 
     title VARCHAR(255),
 
