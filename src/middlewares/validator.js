@@ -1,3 +1,6 @@
+const pool = require('../../db/config');
+const validator = require('validator');
+
 const validateName = (req, res, next) =>{
     const {name} = req.body;
     
@@ -14,40 +17,58 @@ const validateName = (req, res, next) =>{
     next();
 };
 
-const checkEmailOnCreate = (req,res, next) =>{
+const checkEmailOnCreate = async (req,res, next) =>{
     const {email} = req.body;
 
     if(!email){
         return next();
     }
 
-    const emailExist = authors.find(au => au.email === email);
-
-    if(emailExist){
-        return res.status(409).json( { error: "This mail is already use"})
+     if(!validator.isEmail(email)){
+        return res.status(400).json({ error: "El formato del correo no es válido" });
     }
+
+
+   try{
+    const { rows } = await pool.query('SELECT * FROM authors WHERE email = $1',[email]);
+
+    if(rows.length > 0){ return res.status(409).json( { error: "This mail is already use"});
+    }
+   } catch(error){ 
+    res.status(500).json( { error: error.message } );
+   }
 
     next();
 };
 
 
 
-const checkEmailOnUpdate = (req,res, next) =>{
-    const {email} = req.body;
-
+const checkEmailOnUpdate = async (req, res, next) => {
+    const { email } = req.body;
     const id = req.params.id;
 
-    if(!email){
+    if(!email) {
         return next();
     }
-
-    const emailExist = authors.find(au => au.email === email && au.id !== parseInt(id));
-
-    if(emailExist){
-        return res.status(409).json( { error: "This mail is already use"})
+    
+    if(!validator.isEmail(email)) {
+        return res.status(400).json({ error: "El formato del correo no es válido" });
     }
 
-    next();
+    try {
+        const { rows } = await pool.query(
+            'SELECT * FROM authors WHERE email = $1 AND id != $2',
+            [email, id]
+        );
+
+        if(rows.length > 0) {
+            return res.status(409).json({ error: "El correo ya está en uso" });
+        }
+        
+        next();
+    } catch(error) {
+        res.status(500).json({ error: error.message });
+    }
 };
 
 const validateTitle = (req, res, next) =>{
@@ -67,7 +88,7 @@ const validateTitle = (req, res, next) =>{
     next();
 }
 
-const validateTitle = (req, res, next) =>{
+const validateContent = (req, res, next) =>{
     const {content} = req.body;
 
     if(!content){
@@ -80,7 +101,7 @@ const validateTitle = (req, res, next) =>{
     next();
 }
 
-const validateAuthorId = (req, res, next) =>{
+const validateAuthorId = async (req, res, next) =>{
     const {author_id} = req.body;
 
     if(!author_id){
@@ -90,7 +111,24 @@ const validateAuthorId = (req, res, next) =>{
         return res.status(400).json( { error: "El campo author_id debe ser un número válido"});
     }
 
+      try {
+        const { rows } = await pool.query(
+            'SELECT id FROM authors WHERE id = $1', 
+            [author_id]
+        );
+
+        if(rows.length === 0) {
+            return res.status(400).json({ 
+                error: "El author_id no existe" 
+            });
+        }
+
+        next();
+    } catch(error) {
+        res.status(500).json({ error: error.message });
+    }
+
     next();
 }
 
-module.exports = { validateName, checkEmailOnCreate, checkEmailOnUpdate};
+module.exports = { validateName, validateTitle, validateContent, validateAuthorId, checkEmailOnCreate, checkEmailOnUpdate};
