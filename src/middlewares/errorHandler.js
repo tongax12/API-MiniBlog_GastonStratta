@@ -1,8 +1,9 @@
-export const errorHandler = (err, req, res, next) => {
-  
+const errorHandler = (err, req, res, next) => {
   const statusCode = err.statusCode || 500;
 
-  console.error(`[ERROR] ${statusCode} - ${err.message}`);
+  if (process.env.NODE_ENV !== 'production') {
+    console.error(`[ERROR] ${statusCode} - ${err.message}`);
+  }
 
   res.status(statusCode).json({
     success: false,
@@ -10,9 +11,10 @@ export const errorHandler = (err, req, res, next) => {
   });
 };
 
-export const createError = (statusCode, message) => {
+const createError = (statusCode, message) => {
   const error = new Error(message);
   error.statusCode = statusCode;
   return error;
 };
 
+module.exports = { errorHandler, createError };

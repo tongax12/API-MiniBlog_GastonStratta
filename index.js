@@ -1,3 +1,4 @@
+
 const { loadEnvFile } = require('node:process');
 loadEnvFile('.env');
 const app = require('./server');

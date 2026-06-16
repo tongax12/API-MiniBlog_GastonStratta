@@ -1,35 +1,40 @@
+const { createError } = require('../middlewares/errorHandler');
 const postService = require('../services/postService');
 
-const getAllPosts = async (req, res) => {
+const getAllPosts = async (req, res, next) => {
     try {
         const posts = await postService.getAllPosts();
         res.json(posts);
     } catch(error) {
-        res.status(500).json({ error: error.message });
+        next(createError(500, error.message));
     }
 };
 
-const getPostById = async (req, res) => {
+const getPostById = async (req, res, next) => {
     try {
         const id = Number(req.params.id);
         const post = await postService.getPostById(id);
         
+        if (isNaN(id)) {
+        return next(createError(400, 'Id inválido'));
+        }
+
         if(!post) {
-            return res.status(404).json({ error: "Post not found" });
+            return next(createError(404, 'Post no encontrado' ));
         }
         res.json(post);
     } catch(error) {
-        res.status(500).json({ error: error.message });
+        next(createError(500, error.message));
     }
 };
 
-const getPostsByAuthorId = async (req, res) => {
+const getPostsByAuthorId = async (req, res, next) => {
     try {
         const authorId = Number(req.params.id);
         const posts = await postService.getAllPostByAuthorId(authorId);
         
         if(posts.length === 0) {
-            return res.status(404).json({ error: "Posts not found" });
+            return next(createError(404,'El autor no tiene post publicados'));
         }
         
         const result = {
@@ -50,46 +55,53 @@ const getPostsByAuthorId = async (req, res) => {
         
         res.json(result);
     } catch(error) {
-        res.status(500).json({ error: error.message });
+        next(createError(500, error.message));
     }
 };
 
-const createPost = async (req, res) => {
+const createPost = async (req, res, next) => {
     try {
         const { title, content, author_id, published } = req.body;
         const post = await postService.createPost(title, content, author_id, published);
         res.status(201).json(post);
     } catch(error) {
-        res.status(500).json({ error: error.message });
+       next(createError(500, error.message));
     }
 };
 
-const updatePost = async (req, res) => {
+const updatePost = async (req, res, next) => {
     try {
         const id = Number(req.params.id);
         const { title, content, published } = req.body;
         const post = await postService.updatePost(id, title, content, published);
-        
-        if(!post) {
-            return res.status(404).json({ error: "Post not found" });
+       
+        if (isNaN(id)) {
+        return next(createError(400, 'Id inválido'));
         }
+
+        if(!post) {
+            return next(createError(404, 'Post no encontrado'));
+        }
+
         res.json(post);
     } catch(error) {
-        res.status(500).json({ error: error.message });
+        next(createError(500, error.message));
     }
 };
 
-const deletePost = async (req, res) => {
+const deletePost = async (req, res, next) => {
     try {
         const id = Number(req.params.id);
         const post = await postService.deletePost(id);
-        
+        if (isNaN(id)) {
+        return next(createError(400, 'Id inválido'));
+        }
         if(!post) {
-            return res.status(404).json({ error: "Post not found" });
+            return next(createError(404, 'Post no encontrado'));
         }
         res.json(post);
     } catch(error) {
-        res.status(500).json({ error: error.message });
+        next(createError(500, error.message));
     }
 };
 

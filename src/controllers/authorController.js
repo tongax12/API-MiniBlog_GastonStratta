@@ -1,15 +1,16 @@
 const authorService = require('../services/authorService');
+const { createError } = require('../middlewares/errorHandler');
 
-const getAllAuthors = async (req, res) => {
+const getAllAuthors = async (req, res, next) => {
     try {
         const authors = await authorService.getAllAuthors();
         res.json(authors);
     } catch(error) {
-        res.status(500).json({ error: error.message });
+        next(createError(500, error.message));
     }
 };
 
-const getAuthorById = async (req, res) => {
+const getAuthorById = async (req, res, next) => {
     try {
         const id = Number(req.params.id);
         const author = await authorService.getAuthorById(id);
@@ -23,21 +24,21 @@ const getAuthorById = async (req, res) => {
         }
         res.json(author);
     } catch(error) {
-        res.status(500).json({ error: error.message });
+        next(createError(500, error.message));
     }
 };
 
-const createAuthor = async (req, res) => {
+const createAuthor = async (req, res, next) => {
     try {
         const { name, email, bio } = req.body;
         const author = await authorService.createAuthor(name, email, bio);
         return res.status(201).json(author);
     } catch(error) {
-        return res.status(500).json({ error: error.message });
+        next(createError(500, error.message));
     }
 };
 
-const updateAuthor = async (req, res) => {
+const updateAuthor = async (req, res, next) => {
     try {
         const id = Number(req.params.id);
         const { name, email, bio } = req.body;
@@ -50,11 +51,11 @@ const updateAuthor = async (req, res) => {
         }
         res.json(author);
     } catch(error) {
-        res.status(500).json({ error: error.message });
+        next(createError(500, error.message));
     }
 };
 
-const deleteAuthor = async (req, res) => {
+const deleteAuthor = async (req, res, next) => {
     try {
         const id = Number(req.params.id);
         const author = await authorService.deleteAuthor(id);
@@ -68,7 +69,7 @@ const deleteAuthor = async (req, res) => {
         }
         res.json(author);
     } catch(error) {
-        res.status(500).json({ error: error.message });
+        next(createError(500, error.message));
     }
 };
 
