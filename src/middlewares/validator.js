@@ -33,12 +33,14 @@ const checkEmailOnCreate = async (req,res, next) =>{
     const { rows } = await pool.query('SELECT * FROM authors WHERE email = $1',[email]);
 
     if(rows.length > 0){ return res.status(409).json( { error: "This mail is already use"});
+
+    return next();
     }
    } catch(error){ 
-    res.status(500).json( { error: error.message } );
+    return res.status(500).json( { error: error.message } );
    }
 
-    next();
+   
 };
 
 
@@ -65,9 +67,9 @@ const checkEmailOnUpdate = async (req, res, next) => {
             return res.status(409).json({ error: "El correo ya está en uso" });
         }
         
-        next();
+       return next();
     } catch(error) {
-        res.status(500).json({ error: error.message });
+        return res.status(500).json({ error: error.message });
     }
 };
 
@@ -85,7 +87,7 @@ const validateTitle = (req, res, next) =>{
         return res.status(400).json( { error: "El titulo no debe exceder los 255 caracteres"})
     }
 
-    next();
+    return next();
 }
 
 const validateContent = (req, res, next) =>{
@@ -98,7 +100,7 @@ const validateContent = (req, res, next) =>{
         return res.status(400).json( { error: "El campo contenido no puede estar vacio"});
     }
 
-    next();
+   return next();
 }
 
 const validateAuthorId = async (req, res, next) =>{
@@ -123,12 +125,106 @@ const validateAuthorId = async (req, res, next) =>{
             });
         }
 
-        next();
+       return next();
     } catch(error) {
-        res.status(500).json({ error: error.message });
+       return res.status(500).json({ error: error.message });
     }
 
-    next();
+   
 }
 
-module.exports = { validateName, validateTitle, validateContent, validateAuthorId, checkEmailOnCreate, checkEmailOnUpdate};
+const checkTitleOnCreate = async (req, res, next) => {
+    const { title } = req.body;
+
+    if(!title) {
+        return next();
+    }
+
+    try {
+        const { rows } = await pool.query(
+            'SELECT * FROM posts WHERE title = $1',
+            [title]
+        );
+
+        if(rows.length > 0) {
+            return res.status(409).json({ error: "El título ya existe en otro post" });
+        }
+        
+        return next();
+    } catch(error) {
+       return res.status(500).json({ error: error.message });
+    }
+};
+
+const checkTitleOnUpdate = async (req, res, next) => {
+    const { title } = req.body;
+    const id = req.params.id;
+
+    if(!title) {
+        return next();
+    }
+
+    try {
+        const { rows } = await pool.query(
+            'SELECT * FROM posts WHERE title = $1 AND id != $2',
+            [title, id]
+        );
+
+        if(rows.length > 0) {
+            return res.status(409).json({ error: "El título ya existe en otro post" });
+        }
+        
+       return next();
+    } catch(error) {
+       return res.status(500).json({ error: error.message });
+    }
+};
+
+const checkContentOnCreate = async (req, res, next) => {
+    const { content } = req.body;
+
+    if(!content) {
+        return next();
+    }
+
+    try {
+        const { rows } = await pool.query(
+            'SELECT * FROM posts WHERE content = $1',
+            [content]
+        );
+
+        if(rows.length > 0) {
+            return res.status(409).json({ error: "El contenido ya existe en otro post" });
+        }
+        
+       return  next();
+    } catch(error) {
+       return res.status(500).json({ error: error.message });
+    }
+};
+
+const checkContentOnUpdate = async (req, res, next) => {
+    const { content } = req.body;
+    const id = req.params.id;
+
+    if(!content) {
+        return next();
+    }
+
+    try {
+        const { rows } = await pool.query(
+            'SELECT * FROM posts WHERE content = $1 AND id != $2',
+            [content, id]
+        );
+
+        if(rows.length > 0) {
+            return res.status(409).json({ error: "El contenido ya existe en otro post" });
+        }
+        
+        return next();
+    } catch(error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
+
+module.exports = { validateName, validateTitle, validateContent, validateAuthorId, checkEmailOnCreate, checkEmailOnUpdate, checkTitleOnCreate, checkTitleOnUpdate, checkContentOnCreate, checkContentOnUpdate};
