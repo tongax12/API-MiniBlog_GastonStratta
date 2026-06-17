@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "vitest",
-    "start": "node server.js",
+    "start": "node index.js",
     "dev": "nodemon index.js"
   },
   "repository": {
@@ -30,7 +30,7 @@
     "yamljs": "^0.3.0"
   },
   "directories": {
-    "test": "tests"
+    "test": "vitest run"
   },
   "devDependencies": {
     "nodemon": "^3.1.14",

@@ -6,6 +6,7 @@ INSERT INTO authors (name, email, bio) VALUES
  ('Carlos Ruiz', 'carlos@example.com', 'Escritor técnico especializado en bases de datos'),
 
  ('María López', 'maria@example.com', 'Ingeniera de software con foco en APIs REST');
+ 
 INSERT INTO posts (title, content, author_id, published) VALUES
 
  ('Introducción a Node.js', 'Node.js es un runtime de JavaScript...', 1, true),

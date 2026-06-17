@@ -27,8 +27,8 @@ API REST para gestionar autores y posts, construida con Node.js, Express y Postg
 ### 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/tongax12/API-MiniBlog.git
-cd miniblog-api
+git clone https://github.com/tongax12/API-MiniBlog_GastonStratta.git
+cd api-miniblog
 ```
 
 ### 2. Instalar dependencias
@@ -50,7 +50,7 @@ Contenido del `.env`:
 ```
 DB_HOST=localhost
 DB_PORT=5432
-DB_NAME=miniblog
+DB_NAME=api_miniblog
 DB_USER=tu_usuario
 DB_PASSWORD=tu_contraseña
 NODE_ENV=development
@@ -179,7 +179,7 @@ PORT=3000
 Desde tu máquina local, conectate a la base de Railway usando la Public URL:
 
 ```bash
-psql "postgresql://usuario:contraseña@host-publico:puerto/nombre_db" -f src/db/schema.sql
+psql "postgresql://usuario:contraseña@host-publico:puerto/nombre_db" -f db/setup.sql
 ```
 
 ### 5. Deploy
