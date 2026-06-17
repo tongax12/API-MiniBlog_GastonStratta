@@ -6,9 +6,9 @@ API REST para gestionar autores y posts, construida con Node.js, Express y Postg
 
 ## Tecnologías
 
-- Node.js 20+
-- Express 5
-- PostgreSQL
+- Node.js v24.15.0
+- Express v5.2.1
+- PostgreSQL v18.4
 - swagger-ui-express + yamljs
 - vitest + supertest
 
@@ -23,7 +23,7 @@ API REST para gestionar autores y posts, construida con Node.js, Express y Postg
 ---
 ## 🚀 API desplegada
 
-<a href="https://api-minibloggastonstratta-production.up.railway.app" target="_blank">Proyecto en desplegado en Railway</a>
+<a href="https://api-minibloggastonstratta-production.up.railway.app" target="_blank">Proyecto desplegado en Railway</a>
 ---
 ## Configuración local
 
