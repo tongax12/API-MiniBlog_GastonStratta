@@ -207,7 +207,7 @@ miniblog-api/
 │   ├── routes/
 │   │   ├── authors.routes.js
 │   │   └── posts.routes.js
-│   ├── middlewares/
+│   └── middlewares/
 │       ├── errorHandler.js
 │       └── validator.js
 │── db/
@@ -218,6 +218,9 @@ miniblog-api/
 │   ├── authors.test.js
 │   ├── posts.test.js
 │   └── validator.unit.test.js
+├── docs/
+|   ├── prompt-IA.md
+|   └── diagramaError.png 
 ├── openapi.yaml
 ├── server.js
 ├── index.js
@@ -265,5 +268,7 @@ Durante el desarrollo de este proyecto se utilizó Claude (Anthropic) como asist
 - Ayuda con los errores que saltaban al testear el CRUD de manera manual y de errores en el código que saltaban al guardarse los archivos.
 - Guía para la creación del endpoint: GET /posts/author/:id.
 - Guía y corrector en el desarrollo de la documentación OpenAPI,marcando descripciones incompletas.
+
+Archivo para ver algunos de los prompts usados en la IA: 
 
 Todo el código generado fue revisado, adaptado e integrado manualmente al proyecto, verificando que funcionara correctamente con la base de código existente.
