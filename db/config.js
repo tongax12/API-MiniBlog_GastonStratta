@@ -1,5 +1,10 @@
 const { Pool } = require('pg');
 
+try {
+  const { loadEnvFile } = require('node:process');
+  loadEnvFile('.env');
+} catch (e) {}
+
 const isProduction = process.env.NODE_ENV === 'production';
 
 const pool = new Pool(
