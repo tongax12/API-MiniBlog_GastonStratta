@@ -12,6 +12,10 @@ app.use(express.json());
 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
+app.get('/', (req, res) => {
+  res.json({ message: 'API funcionando 🚀' });
+});
+
 app.use('/authors', authorsRouter);
 
 app.use('/posts', postsRouter);
