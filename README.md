@@ -269,6 +269,6 @@ Durante el desarrollo de este proyecto se utilizó Claude (Anthropic) como asist
 - Guía para la creación del endpoint: GET /posts/author/:id.
 - Guía y corrector en el desarrollo de la documentación OpenAPI,marcando descripciones incompletas.
 
-Archivo para ver algunos de los prompts usados en la IA: 
+Archivo para ver algunos de los prompts usados en la IA: [Prompt-IA](./docs/prompt-IA.md)
 
 Todo el código generado fue revisado, adaptado e integrado manualmente al proyecto, verificando que funcionara correctamente con la base de código existente.
