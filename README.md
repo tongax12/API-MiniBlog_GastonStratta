@@ -229,7 +229,33 @@ miniblog-api/
 ```
 
 ---
+## Diagrama usado para la Creación de la base de datos:
+Decisiones:
+- Relación 0 a N: el autor puede no tener un post cuando se crea, el autor puede hacer 0 o más post pero un post solo puede tener un autor.
+- Conexión entre las tablas: author_id es la clave foránea (FK) que referencia authors(id).
+- Eliminación de un autor: cuando se elimina un autor, eliminados los posts hechos por él.
+```mermaid
+erDiagram
+    AUTHORS ||--o{ POSTS : escribe
 
+    AUTHORS {
+        int id PK
+        string name
+        string email
+        text bio
+        timestamptz create_at
+    }
+
+    POSTS {
+        int id PK
+        int author_id FK
+        string title
+        text content
+        boolean published
+        timestamptz created_at
+    }
+```
+---
 ## Uso de IA en el proyecto
 
 Durante el desarrollo de este proyecto se utilizó Claude (Anthropic) como asistente de programación. Las áreas donde se empleó IA fueron:
