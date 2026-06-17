@@ -23,7 +23,7 @@ API REST para gestionar autores y posts, construida con Node.js, Express y Postg
 ---
 ## 🚀 API desplegada
 
-[https://tu-proyecto.railway.app](api-minibloggastonstratta-production.up.railway.app)
+[Proyecto en desplegado en Railway](api-minibloggastonstratta-production.up.railway.app)
 ---
 ## Configuración local
 
