@@ -1,4 +1,7 @@
-/*CREATE DATABASE api_miniblog;*/
+CREATE DATABASE api_miniblog;
+
+\c api_miniblog
+
 CREATE TABLE authors (
     id SERIAL PRIMARY KEY,
 
