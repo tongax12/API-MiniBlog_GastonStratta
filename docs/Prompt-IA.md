@@ -16,7 +16,7 @@ Necesito que me ayudes a orientar como hacer el codigo de errorHandler.js, y que
 Vamos paso a paso con el errorHandler.js. Te explico la lógica y las decisiones de diseño.
 ¿Qué hace un middleware de errores en Express?
 Express tiene un mecanismo especial: si defines un middleware con 4 parámetros (err, req, res, next), lo reconoce automáticamente como manejador de errores. Cuando cualquier parte de tu app llama next(error), Express salta directamente a este middleware.
-Además de eso me hizo este diagrama para orientarme[Diagrama que usé como orientación](./image.png).
+Además de eso me hizo este diagrama para orientarme [Diagrama que usé como orientación](diagramaError.png).
 
 ## Prompt mandado a la IA para orientarme en la creación del endpoint:  GET /posts/author/:authorId
 
