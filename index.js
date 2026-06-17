@@ -1,10 +1,11 @@
+try {
+  const { loadEnvFile } = require('node:process');
+  loadEnvFile('.env');
+} catch (error) {
+  // en producción no hay .env, Railway usa sus propias variables
+}
 
-const { loadEnvFile } = require('node:process');
-loadEnvFile('.env');
 const app = require('./server');
 
-const PORT = process.env.PORT || 3000;  
-
-app.listen(PORT, () => {
-  console.log(`Server on http://localhost:${PORT}`);  
-});
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`Server en puerto ${port}`));
