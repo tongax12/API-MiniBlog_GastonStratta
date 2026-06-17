@@ -21,7 +21,10 @@ API REST para gestionar autores y posts, construida con Node.js, Express y Postg
 - npm
 
 ---
+## 🚀 API desplegada
 
+[https://tu-proyecto.railway.app](api-minibloggastonstratta-production.up.railway.app)
+---
 ## Configuración local
 
 ### 1. Clonar el repositorio
